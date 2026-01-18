@@ -13,7 +13,7 @@ controllers, rather than manual deletion.
 ## Prerequisites
 
 - **Go 1.24+**
-- **Minikube** (v1.30.11 recommended)
+- **Minikube**
 - **kubectl** configured to your minikube cluster
 - **Helm** (for monitoring stack)
 

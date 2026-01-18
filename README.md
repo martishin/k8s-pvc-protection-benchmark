@@ -192,6 +192,46 @@ You can also validate that the metrics endpoint is live:
 curl http://localhost:8080/metrics
 ```
 
+## Results
+
+### Kubernetes 1.30
+
+```
+=== Benchmark Summary ===
+Total Duration: 28.510834167s
+Scenario: burst
+Replicas: 200
+PVC Size: 100Mi
+Kubernetes Version: v1.30.11
+PVC Poll Interval: 100ms
+PVC Delete Latency:
+  Count: 200
+  Avg:   4.053708648s
+  p50:   4.2203s
+  p90:   7.989635s
+  p99:   9.420722s
+==========================
+```
+
+### Kubernetes 1.32
+
+```
+=== Benchmark Summary ===
+Total Duration: 19.707921375s
+Scenario: burst
+Replicas: 200
+PVC Size: 100Mi
+Kubernetes Version: v1.32.0
+PVC Poll Interval: 100ms
+PVC Delete Latency:
+  Count: 200
+  Avg:   64.513659ms
+  p50:   42ns
+  p90:   84ns
+  p99:   1.587592s
+==========================
+```
+
 ## Safety Guards
 
 - The tool will **only** run if your current kubectl context is `minikube`. This prevents accidental execution on

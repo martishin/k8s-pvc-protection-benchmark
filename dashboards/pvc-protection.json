@@ -1,0 +1,70 @@
+{
+    "title": "PVC Protection Controller Performance",
+    "tags": [
+        "pvc-protection",
+        "pvcbench"
+    ],
+    "time": {
+        "from": "now-15m",
+        "to": "now"
+    },
+    "refresh": "5s",
+    "panels": [
+        {
+            "title": "PVC Delete Latency (p50, p90, p99)",
+            "type": "timeseries",
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "targets": [
+                {
+                    "expr": "histogram_quantile(0.5, sum by (le) (rate(pvcbench_pvc_delete_latency_seconds_bucket[5m])))",
+                    "legendFormat": "p50"
+                },
+                {
+                    "expr": "histogram_quantile(0.9, sum by (le) (rate(pvcbench_pvc_delete_latency_seconds_bucket[5m])))",
+                    "legendFormat": "p90"
+                },
+                {
+                    "expr": "histogram_quantile(0.99, sum by (le) (rate(pvcbench_pvc_delete_latency_seconds_bucket[5m])))",
+                    "legendFormat": "p99"
+                }
+            ]
+        },
+        {
+            "title": "Controller Workqueue Depth",
+            "type": "timeseries",
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 8
+            },
+            "targets": [
+                {
+                    "expr": "max(workqueue_depth{name=~\".*pvc.*protection.*\"})",
+                    "legendFormat": "{{name}}"
+                }
+            ]
+        },
+        {
+            "title": "PVCs Terminating",
+            "type": "timeseries",
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 16
+            },
+            "targets": [
+                {
+                    "expr": "count(kube_persistentvolumeclaim_deletion_timestamp{namespace=~\"pvcbench-.*\"})",
+                    "legendFormat": "terminating"
+                }
+            ]
+        }
+    ]
+}

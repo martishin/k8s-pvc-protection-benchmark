@@ -1,0 +1,94 @@
+{
+    "title": "API Server Pressure",
+    "tags": [
+        "pvc-protection",
+        "pvcbench"
+    ],
+    "time": {
+        "from": "now-15m",
+        "to": "now"
+    },
+    "refresh": "5s",
+    "panels": [
+        {
+            "title": "LIST Pods QPS",
+            "type": "timeseries",
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "targets": [
+                {
+                    "expr": "sum(rate(apiserver_request_total{resource=\"pods\", verb=\"LIST\"}[30s]))",
+                    "legendFormat": "LIST pods"
+                }
+            ]
+        },
+        {
+            "title": "LIST Pods Latency p99",
+            "type": "timeseries",
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 8
+            },
+            "targets": [
+                {
+                    "expr": "histogram_quantile(0.99, sum by (le) (rate(apiserver_request_duration_seconds_bucket{resource=\"pods\", verb=\"LIST\"}[30s])))",
+                    "legendFormat": "p99"
+                }
+            ]
+        },
+        {
+            "title": "API 5xx Errors",
+            "type": "timeseries",
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 16
+            },
+            "targets": [
+                {
+                    "expr": "sum(rate(apiserver_request_total{code=~\"5..\"}[30s]))",
+                    "legendFormat": "5xx"
+                }
+            ]
+        },
+        {
+            "title": "GET PVC QPS",
+            "type": "timeseries",
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 24
+            },
+            "targets": [
+                {
+                    "expr": "sum(rate(apiserver_request_total{resource=\"persistentvolumeclaims\", verb=\"GET\"}[30s]))",
+                    "legendFormat": "GET pvc"
+                }
+            ]
+        },
+        {
+            "title": "GET PVC Latency p99",
+            "type": "timeseries",
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 32
+            },
+            "targets": [
+                {
+                    "expr": "histogram_quantile(0.99, sum by (le) (rate(apiserver_request_duration_seconds_bucket{resource=\"persistentvolumeclaims\", verb=\"GET\"}[30s])))",
+                    "legendFormat": "p99"
+                }
+            ]
+        }
+    ]
+}

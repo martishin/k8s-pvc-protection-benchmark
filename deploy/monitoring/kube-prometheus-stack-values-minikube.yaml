@@ -1,0 +1,45 @@
+# kube-prometheus-stack values for minikube
+coreDns:
+  enabled: true
+kubeControllerManager:
+  enabled: true
+  service:
+    enabled: true
+    port: 10257
+    targetPort: 10257
+  serviceMonitor:
+    enabled: true
+    https: true
+    insecureSkipVerify: true
+kubeScheduler:
+  enabled: true
+  service:
+    enabled: true
+    port: 10259
+    targetPort: 10259
+  serviceMonitor:
+    enabled: true
+    https: true
+    insecureSkipVerify: true
+kubeEtcd:
+  enabled: true
+  serviceMonitor:
+    scheme: http
+    insecureSkipVerify: true
+kube-state-metrics:
+  enabled: true
+grafana:
+  adminPassword: "admin"
+prometheus:
+  prometheusSpec:
+    scrapeInterval: 5s
+    evaluationInterval: 5s
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: { }
+    serviceMonitorNamespaceSelector: { }
+    # Allow scraping the tool itself
+    additionalScrapeConfigs:
+      - job_name: 'pvcbench'
+        scrape_interval: 5s
+        static_configs:
+          - targets: [ 'host.docker.internal:8080' ] # If running on Mac outside cluster

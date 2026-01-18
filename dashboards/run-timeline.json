@@ -1,0 +1,46 @@
+{
+    "title": "Run Timeline",
+    "tags": [
+        "pvc-protection",
+        "pvcbench"
+    ],
+    "time": {
+        "from": "now-15m",
+        "to": "now"
+    },
+    "refresh": "5s",
+    "panels": [
+        {
+            "title": "Tool Progress: Pods Remaining",
+            "type": "timeseries",
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "targets": [
+                {
+                    "expr": "pvcbench_progress_pods_remaining",
+                    "legendFormat": "pods"
+                }
+            ]
+        },
+        {
+            "title": "Tool Progress: PVCs Terminating",
+            "type": "timeseries",
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 8
+            },
+            "targets": [
+                {
+                    "expr": "pvcbench_progress_pvcs_terminating",
+                    "legendFormat": "pvcs"
+                }
+            ]
+        }
+    ]
+}
